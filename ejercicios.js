@@ -18,66 +18,70 @@ const rl = readline.createInterface({
   output: process.stdout
 });
 
-const ejecutaTarea = () => {
-    rl.question(`¿Que programa desea ejecutar? seleccione del 1-10`, (tarea) => {
-    tarea = Number(tarea);
+const tareas = [
+    {numero: 1, descripcion: "Imprimir los números del 1 al 100", ejecutar: tareaUno},
+    {numero: 2, descripcion: "Imprimir los números pares del 1 al 100", ejecutar: tareaDos},
+    {numero: 3, descripcion: "Imprimir los números impares del 1 al 100", ejecutar: tareaTres},
+];
 
-    if (tarea > 0 && tarea < 11) {
-
-        switch (tarea) {
-            case 1:
-                tareaUno()
-                break;
-            case 2:
-                tareaDos()
-                break;
-            case 3:
-                tareaTres()
-                break;
-            default:
-                console.log("El programa seleccionado no existe.")
-                break;
+function continueOrExit(){
+    rl.question("¿Desea seleccionar otra tarea? (si/no)", (respuesta) => {
+        if (respuesta === "si") {
+            main();
+        } else {
+            console.log("Gracias por utilizar el programa. ¡Hasta luego!");
+            rl.close();
         }
-    }else{
-        console.log('Debes elegir un numero del 1 al 10')
-    }
-    rl.close();
     });
 }
 
-
-// 1: imprima los números del 1 al 100
-function tareaUno() {
-    let numero = 0;
-    while (numero <= 100) {
-        console.log(numero);
-        numero++
+function main(){
+    console.log("Elige un numero del 1 al N para seleccionar una tarea:");
+    tareas.forEach(tarea => {
+        console.log(`${tarea.numero}. ${tarea.descripcion}`);
+    });
+    rl.question("Elige una tarea: ", (respuesta) => {
+    tarea = parseInt(respuesta);
+    let tareaElegida = tareas.find(tareaElegida => tareaElegida.numero === tarea);
+    if(tareaElegida) {
+        rl.question(`El programa ${tareaElegida.numero} ${tareaElegida.descripcion} ¿Desea verlo? (si/no)`, (respuesta) => {
+            if (respuesta === "si") {
+                tareaElegida.ejecutar();
+                continueOrExit();
+            } else {
+                continueOrExit();
+            }
+        });
+    } else {
+        console.log("La tarea seleccionada no existe.");
+        continueOrExit();
     }
+});
 }
 
-    
-// 2: imprima los números PARES del 1 al 100
+function tareaUno() {
+    for (let i = 1; i <= 100; i++) {
+        console.log(i);
+    }
+    continueOrExit();
+}
+
 function tareaDos() {
-    let numero = 0
-    while (numero <= 100){ //mientras numero sea menor o igual a 100 se ejecutará el ciclo 
-        numero++; //incrementa el valor de numero en 1
-        if(numero % 2 == 0  //si el residuo de la división de numero entre 2 es 0
-            && numero !== 0)  //y numero no es 0
-                console.log(numero) // imprime el numero
+    for (let i = 1; i <= 100; i++) {
+        if (i % 2 === 0) {
+            console.log(i);
         }
-     } 
-
-
-// 3: imprima los números IMPARES del 1 al 100
-function tareaTres() {
-    let numero = 0
-    while (numero <= 100){ //mientras numero sea menor o igual a 100 se ejecutará el ciclo 
-        numero++; //incrementa el valor de numero en 1
-        if(numero % 2 != 0  //si el residuo de la división de numero entre 2 es diferente de 0
-            && numero !== 0  //y numero no es 0
-            && numero <= 100){ // y numero es menor o igual a 100
-                console.log(numero) // imprime el numero
-        }
-     }
+    }
+    continueOrExit();
 }
-ejecutaTarea()
+
+function tareaTres() {
+    for (let i = 1; i <= 100; i++) {
+        if (i % 2 !== 0) {
+            console.log(i);
+        }
+    }
+    continueOrExit();
+}
+
+main();
