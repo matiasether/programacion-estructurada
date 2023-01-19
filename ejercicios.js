@@ -21,7 +21,8 @@ const tareas = [
     {numero: 2, descripcion: "Imprime los números pares del 1 al 100", ejecutar: tareaDos},
     {numero: 3, descripcion: "Imprime los números impares del 1 al 100", ejecutar: tareaTres},
     {numero: 4, descripcion: "Calcula la suma de los números del 1 al 100", ejecutar: tareaCuatro},
-    {numero: 5, descripcion: "Calcule el promedio de los números del 1 al 100", ejecutar: tareaCinco},
+    {numero: 5, descripcion: "Calcula el promedio de los números del 1 al 100", ejecutar: tareaCinco},
+    {numero: 6, descripcion: "Calcula el factorial de un número dado", ejecutar: tareaSeis},
 ];
 
 function continueOrExit(){
@@ -107,5 +108,21 @@ function tareaCinco() {
     console.log(resultado) //50.5
     continueOrExit();
 }
+
+
+function tareaSeis() {
+    //calcule el factorial de un número dado
+    rl.question("Elige un numero para factorizar: ", (respuesta) => {
+        let numero = Number(respuesta);
+    if (typeof numero === "number") {
+        parseInt(numero)
+        let factorial = 1;
+        for (let i = 1; i <= numero; i++) {
+            factorial *= i;
+        }
+        console.log(`El factorial de ${numero} es: ${Math.floor(factorial)}`);
+    }else{console.log('Debes seleccionar un numero para que funcione el programa')}
+    continueOrExit()
+} ) }
 
 main();
